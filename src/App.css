@@ -24,6 +24,15 @@
   color: rgb(2, 0, 119);
 }
 
+/* Adjust spacing between buttons */
+.button-container {
+  display: flex;
+  gap: 16px; /* Adjust space between buttons */
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
 .App-link {
   color: #61dafb;
 }
@@ -36,3 +45,32 @@
     transform: rotate(360deg);
   }
 }
+
+/* what i've added */
+
+/* General Button Styling */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Blue Button */
+.btn-blue {
+  background-color: #66e3f9;
+  color: white;
+}
+
+.btn-blue:hover {
+  background-color: #b0efff;
+  transform: scale(1.05);
+}
+
