@@ -22,6 +22,19 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: rgb(2, 0, 119);
+  padding: 40px; /* Adds space inside the container */
+  margin: 0 auto; /* Centers the container */
+  /* max-width: 800px; Limits the width to make text more readable */
+}
+
+
+.App-header h1 {
+  margin-bottom: 20px; /* Adds space below the heading */
+}
+
+.App-header p {
+  margin-bottom: 16px; /* Adds space below each paragraph */
+  line-height: 1.6; /* Increases spacing between lines */
 }
 
 /* Adjust spacing between buttons */
@@ -31,7 +44,6 @@
   justify-content: center;
   margin-top: 20px;
 }
-
 
 .App-link {
   color: #61dafb;
@@ -48,7 +60,7 @@
 
 /* what i've added */
 
-/* General Button Styling */
+/* Button Styling */
 .btn {
   display: inline-block;
   padding: 12px 24px;
@@ -73,4 +85,92 @@
   background-color: #b0efff;
   transform: scale(1.05);
 }
+
+
+/* for admin */
+.admin-container {
+  /* max-width: 900px; */
+  margin: 40px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #b8f8ff;
+}
+
+.admin-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 600px;
+  padding: 14px;
+  font-size: 18px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-bar:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+}
+
+.results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.result-card {
+  width: 100%;
+  max-width: 600px;
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  /* transition: background 0.3s ease-in-out, transform 0.2s ease; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+}
+
+.result-card:hover {
+  background: #007BFF;
+  color: white;
+  transform: scale(1.03);
+}
+
+.result-content {
+  text-align: left;
+}
+
+.result-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.result-address {
+  font-size: 16px;
+  color: #555;
+}
+
+.no-results {
+  font-size: 18px;
+  color: #999;
+  margin-top: 20px;
+}
+
 
