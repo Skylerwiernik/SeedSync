@@ -27,6 +27,10 @@
   /* max-width: 800px; Limits the width to make text more readable */
 }
 
+body {
+  overflow: hidden; /* Disables scrolling */
+}
+
 
 .App-header h1 {
   margin-bottom: 20px; /* Adds space below the heading */

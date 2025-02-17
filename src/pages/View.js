@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
+
+import React from 'react';
+
+
 import { useNavigate } from "react-router-dom";
 
 import "../App.css";
+import Loading from './Loading';
 
 
 const View = () => {
@@ -10,20 +15,26 @@ const View = () => {
   const [photos, setPhotos] = useState([]);
   const [newPhoto, setNewPhoto] = useState(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(false); // Initial state is not loading
 
+  
   useEffect(() => {
     const fetchPhotos = async () => {
+      setLoading(true); // Set loading before starting fetch
       try {
         const data = await getPhotos();
-        setPhotos(data || []); // If data is undefined, default to an empty array
+        setPhotos(data || []); // Ensure data is always an array
       } catch (error) {
         console.error("Error fetching photos:", error);
-        setPhotos([]); // Prevent crashes
+        setPhotos([]);
+      } finally {
+        setLoading(false); // Stop loading after fetch completes
       }
     };
   
     fetchPhotos();
   }, []);
+  
   
 
   // Handle file selection
