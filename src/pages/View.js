@@ -4,7 +4,9 @@ import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "firebase/fires
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { app } from "../firebase";
 import { getAuth } from "firebase/auth";
+
 import "../App.css";
+import Loading from './Loading';
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -13,9 +15,10 @@ const View = () => {
   const [name, setName] = useState("Loading");
   const [address, setAddress] = useState("Loading");
   const [photos, setPhotos] = useState([]);
+
   const { id} = useParams();
 
-
+  
   useEffect(() => {
     getData();
   }, [photos]);

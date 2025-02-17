@@ -1,15 +1,15 @@
 .App {
   text-align: center;
-}
+    }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+    .App-logo {
+      height: 40vmin;
+      pointer-events: none;
+    }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    @media (prefers-reduced-motion: no-preference) {
+      .App-logo {
+        animation: App-logo-spin infinite 20s linear;
   }
 }
 
@@ -25,6 +25,10 @@
   padding: 40px; /* Adds space inside the container */
   margin: 0 auto; /* Centers the container */
   /* max-width: 800px; Limits the width to make text more readable */
+}
+
+body {
+  overflow: hidden; /* Disables scrolling */
 }
 
 
