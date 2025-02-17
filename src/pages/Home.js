@@ -1,7 +1,7 @@
 import "../App.css";
 import { app } from "../firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -12,6 +12,12 @@ function signin() {
         .then(async (result) => {
             const user = result.user;
             const userId = user.uid;
+            if (!await checkUserExists(userId)) {
+                let address = await getUserAddress();
+                await setDoc(doc(db, "users", userId), {
+                    "address": address
+                });
+            }
             // Check Firestore collection "admins" for the user
             const adminDocRef = doc(db, "admins", "admins");
             const adminDocSnap = await getDoc(adminDocRef);
@@ -31,6 +37,16 @@ function signin() {
         .catch((error) => {
             console.error("Error during sign-in:", error);
         });
+}
+
+async function checkUserExists(uid) {
+    const ref = doc(db, "users", uid);
+    const snap = await getDoc(ref);
+    return snap.exists();
+}
+
+async function getUserAddress() {
+    return "123 Hawaii Road";
 }
 
 const Home = () => {
