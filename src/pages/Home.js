@@ -15,7 +15,8 @@ function signin() {
             if (!await checkUserExists(userId)) {
                 let address = await getUserAddress();
                 await setDoc(doc(db, "users", userId), {
-                    "address": address
+                    "address": address,
+                    "photos": [{}]
                 });
             }
             // Check Firestore collection "admins" for the user
