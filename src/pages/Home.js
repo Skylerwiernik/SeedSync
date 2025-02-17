@@ -15,7 +15,8 @@ function signin() {
             if (!await checkUserExists(userId)) {
                 let address = await getUserAddress();
                 await setDoc(doc(db, "users", userId), {
-                    "address": address
+                    "address": address,
+                    "photos": [{}]
                 });
             }
             // Check Firestore collection "admins" for the user
@@ -75,8 +76,7 @@ const Home = () => {
         </a>
         <div className="mt-8 flex space-x-4">
             {/* Sign In */}
-            <button className="btn btn-blue">
-            {/* <button className="btn btn-blue" onClick={() => router.push('/Admin')}> */}
+            <button className="btn btn-blue" onClick={signin}>
             Sign In
             </button>
         </div>
