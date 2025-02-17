@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -64,7 +63,7 @@ const View = () => {
 
   }
 
-  async function getData() { // replace
+  async function getData() {
     try {
       const ref = doc(db, "users", id);
       const snap = await getDoc(ref);

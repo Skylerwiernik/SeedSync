@@ -77,7 +77,6 @@ const Home = () => {
         <div className="mt-8 flex space-x-4">
             {/* Sign In */}
             <button className="btn btn-blue" onClick={signin}>
-            {/* <button className="btn btn-blue" onClick={() => router.push('/Admin')}> */}
             Sign In
             </button>
         </div>
