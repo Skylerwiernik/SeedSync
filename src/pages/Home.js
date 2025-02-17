@@ -2,7 +2,6 @@ import "../App.css";
 import { app } from "../firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -13,11 +12,9 @@ function signin() {
         .then(async (result) => {
             const user = result.user;
             const userId = user.uid;
-
             // Check Firestore collection "admins" for the user
             const adminDocRef = doc(db, "admins", "admins");
             const adminDocSnap = await getDoc(adminDocRef);
-
             if (adminDocSnap.exists()) {
                 const adminData = adminDocSnap.data();
 
