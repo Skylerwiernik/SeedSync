@@ -78,8 +78,6 @@ const Home = () => {
         return snap.exists();
     }
 
-
-
     return (
         <div className="App-header" style={{overflow: "hidden"}}>
             <h1>Protect & Preserve Hawaiʻi</h1>
