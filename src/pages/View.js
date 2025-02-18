@@ -6,7 +6,7 @@ import { app } from "../firebase";
 import { getAuth } from "firebase/auth";
 
 import "../App.css";
-import Loading from './Loading';
+import Loading from '../components/Loading';
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -21,7 +21,7 @@ const View = () => {
   
   useEffect(() => {
     getData();
-  }, [photos]);
+  }, []);
 
 
 
@@ -75,7 +75,6 @@ const View = () => {
         setPhotos(data["photos"]);
         setName(auth.currentUser.displayName);
         setAddress(data["address"]);
-
       }
     }
     catch (error) {
@@ -102,7 +101,8 @@ const View = () => {
       {/* Past Photos Section */}
       <div className="photos-section">
         <h2>My photos</h2>
-        {photos.length > 0 ? (
+        {/* Firebase gives [{}] for no photos, requiring the second check */}
+        {photos.length > 0 && photos[0].photo ? (
           photos.map((item, index) => (
             <div key={index} className="photo-card">
               <img src={item.photo} alt={`Taken on ${new Date(item.date).toLocaleDateString()}`} />
