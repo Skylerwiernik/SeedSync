@@ -2,7 +2,23 @@ import "../App.css";
 import { app } from "../firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { useState, useEffect} from "react";
 
+const Home = () => {
+  const [address, setUserAddress] = useState(""); // React state for address
+  const [submittedAddress, setSubmittedAddress] = useState(null); // Stores the submitted address
+
+  const handleSubmit = () => {
+    if (address.trim() === "") {
+      alert("Please enter an address before submitting.");
+      return;
+    }
+
+    setSubmittedAddress(address); // Save the submitted address
+    console.log("Submitted Address:", address); // Log the address (for debugging)
+  };
+
+// imported from firebase
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
@@ -12,10 +28,11 @@ function signin() {
         .then(async (result) => {
             const user = result.user;
             const userId = user.uid;
-            if (!await checkUserExists(userId)) {
-                let address = await getUserAddress();
+            if (!await checkUserExists(userId)) { // checks to make sure user exists
+                let userAddress = await getUserAddress(); // wait to get address of user
+                console.log("user address obtained!", userAddress);
                 await setDoc(doc(db, "users", userId), {
-                    "address": address,
+                    "address": userAddress,
                     "photos": [{}]
                 });
             }
@@ -46,15 +63,22 @@ async function checkUserExists(uid) {
     return snap.exists();
 }
 
-async function getUserAddress() {
-    return "123 Hawaii Road";
+async function getUserAddress() { // show a pop up when called and return what you get asynchronously 
+  if (submittedAddress) {
+    console.log("Address is set:", submittedAddress);
+    return submittedAddress;
+  } else {
+    console.log("Address is not set.");
+  }
+    // return "123 Hawaii Road";
 }
 
-// import { useRouter } from 'next/navigation'; // Import useRouter for navigation
+useEffect(() => { // make sure an address is submitted
+  if (submittedAddress) {
+    signin();
+  }
+}, [submittedAddress]);
 
-const Home = () => {
-
-  // const router = useRouter(); // initialize router
 
   return (
     <div className="App-header">
@@ -64,23 +88,51 @@ const Home = () => {
         Learn more about how you can participate and track existing gardens.
       </p>
 
-
-      <p>
-        Learn more about how you can participate and track existing gardens.
-      </p>
-
-        <div className="button-container">
+      <div className="button-container">
         {/* Learn More Button */}
         <a href="https://www.protectpreservehi.org/general-6-1#/ar-gardens" className="btn btn-blue">
-            Learn More
+          Learn More
         </a>
         <div className="mt-8 flex space-x-4">
-            {/* Sign In */}
-            <button className="btn btn-blue" onClick={signin}>
+          {/* Sign In */}
+          <button className="btn btn-blue" onClick={signin}>
             Sign In
-            </button>
+          </button>
         </div>
       </div>
+
+      {/* Address Input Field */}
+      <div>
+        <label htmlFor="user-address" className="block text-sm font-medium text-red-900">
+          Enter your address:
+        </label>
+        <div className="mt-2">
+          <input
+            type="text"
+            id="user-address"
+            name="address"
+            placeholder="123 Hawaii Road"
+            value={address}
+            onChange={(e) => setUserAddress(e.target.value)} // Update the address state
+            required
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-red-900 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      {/* Submit Button */}
+      <div className="mt-4">
+        <button className="btn btn-blue" onClick={handleSubmit}>
+          Submit Address
+        </button>
+      </div>
+
+      {/* Display Submitted Address */}
+      {submittedAddress && (
+        <div className="mt-4 text-green-600">
+          Address Submitted: {submittedAddress}
+        </div>
+      )}
     </div>
   );
 };
