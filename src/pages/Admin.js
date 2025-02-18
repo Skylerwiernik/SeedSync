@@ -1,39 +1,74 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../App.css"; // Ensure styles are included
+import {doc, query, collection, orderBy, limit, startAt, endAt, getFirestore, getDocs} from "firebase/firestore";
+import "../App.css";
+import {app} from "../firebase";
+
+const db = getFirestore(app);
 
 const Admin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const navigate = useNavigate();
 
-  // Calls the provided search function whenever input changes
-  const handleSearch = async (e) => {
+    // Calls the provided search function whenever input changes
+    const handleSearch = async (e) => {
     const value = e.target.value;
     setSearchTerm(value);
 
-    // Call your search function (replace `yourSearchFunction` with your actual function)
     if (value.trim() !== "") {
-      const data = await yourSearchFunction(value); // This function should return a list of dictionaries
+      const data = await queryFirebase(value);
       setResults(data);
-    } else {
-      setResults([]); // Clear results when search bar is empty
+    }
+    else {
+      setResults([]);
     }
   };
 
-  async function yourSearchFunction(value) {
-    // Simulated API Response (Replace with actual search function)
-    return [
-      { Name: "Foobar", Address: "123 Road", id: "123456" },
-      { Name: "Alice's Cafe", Address: "456 Main St", id: "654321" },
-    ];
+  async function queryFirebase(value) {
+    value = value.trim().toLowerCase();
+
+    /*
+    Firebase does not support a "LIKE" operator,
+    so we have to hack around it by sorting and using "startAt" and "endAt".
+    We then need to prune for duplicates in the two queries.
+     */
+    let name_query = query(
+        collection(db, "users"),
+        orderBy("name_lower"),
+        limit(10),
+        startAt(value),
+        endAt(value + "\uf8ff")
+    );
+
+    let address_query = query(
+        collection(db, "users"),
+        limit(10),
+        orderBy("address_lower"),
+        startAt(value),
+        endAt(value + "\uf8ff")
+    );
+
+    let name_results = await getDocs(name_query);
+    let address_results = await getDocs(address_query);
+
+    let matches = {};
+
+    // Prune duplicates by ID
+    name_results.forEach((item) => {
+      matches[item.id] = item.data();
+    })
+    address_results.forEach((item) => {
+      matches[item.id] = item.data();
+    })
+
+    return Object.values(matches);
   }
 
   return (
     <div className="admin-container">
       <h1 className="admin-title">Admin Dashboard</h1>
 
-      {/* Large Search Bar */}
       <div className="search-container">
         <input
           type="text"
@@ -44,7 +79,6 @@ const Admin = () => {
         />
       </div>
 
-      {/* Display Search Results */}
       <div className="results-container">
         {results.length > 0 ? (
           results.map((item) => (
@@ -54,8 +88,8 @@ const Admin = () => {
               onClick={() => navigate(`/view/${item.id}`)}
             >
               <div className="result-content">
-                <h3 className="result-name">{item.Name}</h3>
-                <p className="result-address">{item.Address}</p>
+                <h3 className="result-name">{item.name}</h3>
+                <p className="result-address">{item.address}</p>
               </div>
             </div>
           ))

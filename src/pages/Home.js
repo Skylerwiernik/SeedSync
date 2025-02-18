@@ -28,11 +28,16 @@ function signin() {
         .then(async (result) => {
             const user = result.user;
             const userId = user.uid;
-            if (!await checkUserExists(userId)) { // checks to make sure user exists
-                let userAddress = await getUserAddress(); // wait to get address of user
-                console.log("user address obtained!", userAddress);
+      
+            if (!await checkUserExists(userId)) {
+                let address = await getUserAddress();
+                // Store name and address in lowercase for quick case-insensitive queries
                 await setDoc(doc(db, "users", userId), {
-                    "address": userAddress,
+                    "address": address,
+                    "name": user.displayName,
+                    "name_lower": user.displayName.toLowerCase(),
+                    "address_lower": address.toLowerCase(),
+                    "id": userId,
                     "photos": [{}]
                 });
             }
@@ -81,7 +86,7 @@ useEffect(() => { // make sure an address is submitted
 
 
   return (
-    <div className="App-header">
+    <div className="App-header" style={{overflow: "hidden"}}>
       <h1>Protect & Preserve Hawaiʻi</h1>
       <p>
         Join our initiative to restore native Hawaiian plant life and control stormwater runoff through rain gardens!
