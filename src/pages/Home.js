@@ -14,8 +14,13 @@ function signin() {
             const userId = user.uid;
             if (!await checkUserExists(userId)) {
                 let address = await getUserAddress();
+                // Store name and address in lowercase for quick case-insensitive queries
                 await setDoc(doc(db, "users", userId), {
                     "address": address,
+                    "name": user.displayName,
+                    "name_lower": user.displayName.toLowerCase(),
+                    "address_lower": address.toLowerCase(),
+                    "id": userId,
                     "photos": [{}]
                 });
             }
