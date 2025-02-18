@@ -62,7 +62,7 @@ const Home = () => {
   // const router = useRouter(); // initialize router
 
   return (
-    <div className="App-header">
+    <div className="App-header" style={{overflow: "hidden"}}>
       <h1>Protect & Preserve Hawaiʻi</h1>
       <p>
         Join our initiative to restore native Hawaiian plant life and control stormwater runoff through rain gardens!
