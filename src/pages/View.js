@@ -72,6 +72,10 @@ const View = () => {
       const snap = await getDoc(ref);
       if (snap.exists()) {
         let data = snap.data();
+
+        // TODO: sort photos in descending order (most recent shown first)
+
+
         setPhotos(data["photos"]);
         setName(auth.currentUser.displayName);
         setAddress(data["address"]);
@@ -85,33 +89,38 @@ const View = () => {
   }
 
   return (
-    <div className="view-container">
-      <h1 className="view-title">{name}</h1>
-      <p className="view-address">{address}</p>
+    <div className="App-header" style={{overflow: "hidden"}}>
+      <div className="view-container">
+        <h1 className="subtitle">{name}</h1>
+        <p className="view-address">{address}</p>
 
-      {/* Take New Photo Section */}
-      <div className="upload-section">
-        <label className="upload-button">
-          Take New Photo
-          <input type="file" accept="image/*" onChange={triggerUpload} hidden />
-        </label>
-      </div>
+        {/* Take New Photo Section */}
+        <div className="upload-section">
 
+        {/* upload button */}
+        <div className="mt-8 flex space-x-4">
+          <label className="btn btn-blue">
+              Take New Photo
+              <input type="file" accept="image/*" onChange={triggerUpload} hidden />
+            </label>
+          </div>
+        </div>
 
-      {/* Past Photos Section */}
-      <div className="photos-section">
-        <h2>My photos</h2>
-        {/* Firebase gives [{}] for no photos, requiring the second check */}
-        {photos.length > 0 && photos[0].photo ? (
-          photos.map((item, index) => (
-            <div key={index} className="photo-card">
-              <img src={item.photo} alt={`Taken on ${new Date(item.date).toLocaleDateString()}`} />
-              <p className="photo-date">{new Date(item.date).toLocaleDateString()}</p>
-            </div>
-          ))
-        ) : (
-          <p className="no-photos">No photos available.</p>
-        )}
+        {/* Past Photos Section */}
+        <div className="photos-section">
+          <h2>My Photos 📷</h2>
+          {/* Firebase gives [{}] for no photos, requiring the second check */}
+          {photos.length > 0 && photos[0].photo ? (
+            photos.map((item, index) => (
+              <div key={index} className="photo-card">
+                <img src={item.photo} alt={`Taken on ${new Date(item.date).toLocaleDateString()}`} />
+                <p className="photo-date">{new Date(item.date).toLocaleDateString()}</p>
+              </div>
+            ))
+          ) : (
+            <p className="no-photos">No photos available.</p>
+          )}
+        </div>
       </div>
     </div>
   );

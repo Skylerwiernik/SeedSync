@@ -80,8 +80,14 @@ const Home = () => {
 
     return (
         <div className="App-header" style={{overflow: "hidden"}}>
-            <h1>Protect & Preserve Hawaiʻi</h1>
-            <p>
+          <div className="view-container">
+
+            {/* Logo */}
+            <img className="logo" src="/images/logo.svg" alt="Protect & Preserve Hawaiʻi" />
+
+            <h1 className="title" >Protect & Preserve Hawaiʻi</h1>
+            <h2 className="subtitle" >SeedSync 🌱</h2>
+            <p className="description" > 
                 Join our initiative to restore native Hawaiian plant life and control stormwater runoff through rain
                 gardens!
                 Learn more about how you can participate and track existing gardens.
@@ -126,7 +132,7 @@ const Home = () => {
                     </button>
                 </div>
             </Popup>
-
+            </div>
         </div>
     );
 };
