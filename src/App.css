@@ -375,6 +375,8 @@ input:focus {
   max-width: 800px;
   text-align: center;
   color: #012970; 
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
