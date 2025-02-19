@@ -85,7 +85,6 @@ const View = () => {
       console.error(error);
       window.location = '/';
     }
-
   }
 
   return (

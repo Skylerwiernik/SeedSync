@@ -66,7 +66,7 @@ const Admin = () => {
   }
 
   return (
-    <div className="view-container">
+    <div className="admin-container">
       <h1 className="subtitle">Admin Dashboard</h1>
 
       <div className="search-container">

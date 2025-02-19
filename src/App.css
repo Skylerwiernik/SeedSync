@@ -30,12 +30,9 @@
   /* max-width: 800px; Limits the width to make text more readable */
 }
 
-/*body {*/
-/*  overflow: hidden; !* Disables scrolling *!*/
-/*}*/
-
 body {
   background: #b8f8ff;
+  /*  overflow: hidden; !* Disables scrolling *!*/
 }
 
 .App-header h1 {
@@ -68,8 +65,6 @@ body {
   }
 }
 
-/* what i've added */
-
 /* Button Styling */
 .btn {
   display: inline-block;
@@ -96,22 +91,7 @@ body {
   transform: scale(1.05);
 }
 
-
 /* for admin */
-.admin-container {
-  /* max-width: 900px; */
-  margin: 40px auto;
-  text-align: center;
-  font-family: Arial, sans-serif;
-  color: #333;
-  background-color: #b8f8ff;
-}
-
-.admin-title {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
 
 .search-container {
   width: 100%;
@@ -195,6 +175,31 @@ body {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
 }
 
+.view-container {
+  padding: 20px 0;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  
+  /* Visual Improvements */
+  background-color: #d3f9fd; /* Light blue */
+  border-radius: 15px;  /* Rounded corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+}
+
+.admin-container {
+  max-width: 800px;
+  margin: 40px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  
+  /* Visual Improvements */
+  background-color: #d3f9fd; /* Light blue */
+  border-radius: 15px;  /* Rounded corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+
+  padding-top: 20px;
+}
+
 .view-title {
   font-size: 32px;
   font-weight: bold;
@@ -220,20 +225,6 @@ body {
   border-radius: 8px;
   cursor: pointer;
   /* transition: background 0.3s; */
-}
-
-.upload-button:hover {
-  background-color: #0056b3;
-}
-
-.uploaded-photo {
-  margin-top: 20px;
-}
-
-.uploaded-photo img {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-top: 10px;
 }
 
 .photos-section {
@@ -272,7 +263,6 @@ body {
   color: #999;
   margin-top: 20px;
 }
-
 
 .popup-overlay {
   position: fixed;
@@ -352,6 +342,8 @@ input:focus {
   width: 120px; /* size */
   /*margin-bottom: 10px; /* spacing */
 }
+
+/* titles  */
 
 .title {
   font-size: 3rem;
