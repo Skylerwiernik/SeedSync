@@ -185,8 +185,7 @@ body {
 
 /* view stufff */
 .view-container {
-  max-width: 800px;
-  padding: 20px;  /* Adds spacing inside the box */
+  padding: 20px 0;
   text-align: center;
   font-family: Arial, sans-serif;
   
