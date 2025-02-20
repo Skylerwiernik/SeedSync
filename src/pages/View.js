@@ -123,16 +123,18 @@ const View = () => {
           <h2>My Photos 📷</h2>
           {photos.length > 0 && photos[0].photo ? (
             <div className="gallery">
-              {photos.map((item, index) => (
+            {photos.map((item, index) => (
+              <div key={index} className="gallery-item">
                 <img
-                  key={index}
                   src={item.photo}
                   alt={`Taken on ${item.date}`}
                   className="gallery-photo"
-                  onClick={() => setSelectedPhoto(item.photo)} // Click to enlarge
+                  onClick={() => setSelectedPhoto(item.photo)} // click to enlarge
                 />
-              ))}
-            </div>
+                <p className="photo-date">{item.date}</p> {/* show the date under  image */}
+              </div>
+            ))}
+          </div>          
           ) : (
             <p className="no-photos">No photos available.</p>
           )}
@@ -144,6 +146,7 @@ const View = () => {
         <div className="modal" onClick={() => setSelectedPhoto(null)}>
           <div className="modal-content">
             <img src={selectedPhoto} alt="Enlarged view" className="modal-image" />
+             <p className="modal-date">{selectedPhoto.date}</p> {/* show the date under  image */}
           </div>
         </div>
       )}

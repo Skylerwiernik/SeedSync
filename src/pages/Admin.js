@@ -19,29 +19,29 @@ const Admin = () => {
   // create react states for checking if it IS an admin
   const [isAdmin, setIsAdmin] = useState(null);
 
-  useEffect(() => { // checks if an admin or not and sets react var
-    const checkAdminStatus = async (user) => {
-      if (user) {
-        const userDocRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userDocRef);
+  // useEffect(() => { // checks if an admin or not and sets react var
+  //   const checkAdminStatus = async (user) => {
+  //     if (user) {
+  //       const userDocRef = doc(db, "users", user.uid);
+  //       const userSnap = await getDoc(userDocRef);
 
-        if (userSnap.exists() && userSnap.data().role === "admin") {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-      } else {
-        setIsAdmin(false);
-      }
-      setLoading(false); // no longer loading
-    }
+  //       if (userSnap.exists() && userSnap.data().role === "admin") {
+  //         setIsAdmin(true);
+  //       } else {
+  //         setIsAdmin(false);
+  //       }
+  //     } else {
+  //       setIsAdmin(false);
+  //     }
+  //     setLoading(false); // no longer loading
+  //   }
 
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      checkAdminStatus(user);
-    });
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     checkAdminStatus(user);
+  //   });
 
-    return () => unsubscribe();
-  })
+  //   return () => unsubscribe();
+  // })
 
     // calls provided search function whenever input changes
     const handleSearch = async (e) => {
@@ -101,15 +101,15 @@ const Admin = () => {
     return Object.values(matches);
   }
 
-  if (loading) {
-    return <p>Loading...</p>; // show loaidng state while chekding admin status
-  }
+  // if (loading) {
+  //   return <p>Loading...</p>; // show loaidng state while chekding admin status
+  // }
 
   return (
     <div className="admin-container">
       <h1 className="subtitle">Admin Dashboard</h1>
 
-      {!isAdmin && <p className="error-message">🚫 You do not have permission to search.</p>}
+      {/* {!isAdmin && <p className="error-message">🚫 You do not have permission to search.</p>} */}
 
       <div className="search-container">
         <input
@@ -118,7 +118,7 @@ const Admin = () => {
           value={searchTerm}
           onChange={handleSearch}
           className="search-bar"
-          disabled={!isAdmin} // disable input for non-admins
+          // disabled={!isAdmin} // disable input for non-admins
         />
       </div>
 
