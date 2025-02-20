@@ -6,7 +6,6 @@ import { app } from "../firebase";
 import { getAuth } from "firebase/auth";
 
 import "../App.css";
-import Loading from '../components/Loading';
 
 const auth = getAuth(app);
 const db = getFirestore(app);
