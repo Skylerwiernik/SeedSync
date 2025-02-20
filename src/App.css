@@ -185,8 +185,8 @@ body {
   border-radius: 15px;  /* Rounded corners */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
 }
-
 .admin-container {
+  padding: 20px;
   max-width: 800px;
   margin: 40px auto;
   text-align: center;
@@ -196,8 +196,6 @@ body {
   background-color: #d3f9fd; /* Light blue */
   border-radius: 15px;  /* Rounded corners */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
-
-  padding-top: 20px;
 }
 
 .view-title {
@@ -371,7 +369,62 @@ input:focus {
   margin-right: auto;
 }
 
+/* Grid Stuff */
 
+/* Photo Gallery */
+.gallery {
+  display: grid; /* Oh yea Skyler was right */
+  /* authomatically creates as many col as possible w / out overflow */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  justify-content: center;
+  padding: 20px;
+  object-fit: cover; /* ensures images don't stretch */
+}
 
+.gallery-photo {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  
+}
 
+.gallery-photo:hover {
+  transform: scale(1.05);
+  transform-origin: center center;
+}
 
+/* 🔍 Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Click anywhere to close */
+.modal:hover {
+  cursor: pointer;
+}

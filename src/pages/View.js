@@ -15,15 +15,13 @@ const View = () => {
   const [name, setName] = useState("Loading");
   const [address, setAddress] = useState("Loading");
   const [photos, setPhotos] = useState([]);
+  const [selectedPhoto, setSelectedPhoto] = useState(null); // track clicked photo to show
 
   const { id} = useParams();
 
-  
   useEffect(() => {
     getData();
   }, []);
-
-
 
   const triggerUpload = (event) => {
     uploadPhoto(event.target.files[0]);
@@ -54,12 +52,19 @@ const View = () => {
       const db = getFirestore();
       const userDocRef = doc(db, "users", id);
 
-      const photoObj = { photo: url, date: date }
-      setPhotos([...photos, photoObj]);
+      const photoObj = { photo: url, date: date }; // create new photo obj
+
+      // Sort photos immediately after adding new one
+      const updatedPhotos = [...photos, photoObj].sort(
+        (a, b) => new Date(b.date) - new Date(a.date) // Sort in descending order
+      ); // see whether difference in dates is positive or negative, neg = a comes before b
+
+      // setPhotos([...photos, photoObj]);
+      setPhotos(updatedPhotos); // ✅ Update state with sorted array
       await updateDoc(userDocRef, {
         photos: arrayUnion(photoObj)
       });
-      console.log("Uploaded!");
+      console.log("Uploaded and sorted!");
     } catch (error) {
       console.error("Error uploading file or updating Firestore:", error);
     }
@@ -75,15 +80,24 @@ const View = () => {
 
         // TODO: sort photos in descending order (most recent shown first)
 
+        // sort array of photos so most recent appears first
+        const sortedPhotos = data["photos"]
+        // check if there are any photos, if data["photos"] exists = create a copy of it
+          ? [...data["photos"]].sort(
+              (a, b) => new Date(b.date) - new Date(a.date)// sort the photos by date
 
-        setPhotos(data["photos"]);
+            )
+          : [];  // no photos = use an empty array 
+
+        // setPhotos(data["photos"]);
+        setPhotos(sortedPhotos);
         setName(auth.currentUser.displayName);
         setAddress(data["address"]);
       }
     }
     catch (error) {
       console.error(error);
-      window.location = '/';
+      window.location = '/'; // redirect
     }
   }
 
@@ -105,22 +119,35 @@ const View = () => {
           </div>
         </div>
 
-        {/* Past Photos Section */}
-        <div className="photos-section">
+        {/* 📷 Photo Gallery */}
+        <div className="photo-gallery">
           <h2>My Photos 📷</h2>
-          {/* Firebase gives [{}] for no photos, requiring the second check */}
           {photos.length > 0 && photos[0].photo ? (
-            photos.map((item, index) => (
-              <div key={index} className="photo-card">
-                <img src={item.photo} alt={`Taken on ${new Date(item.date).toLocaleDateString()}`} />
-                <p className="photo-date">{new Date(item.date).toLocaleDateString()}</p>
-              </div>
-            ))
+            <div className="gallery">
+              {photos.map((item, index) => (
+                <img
+                  key={index}
+                  src={item.photo}
+                  alt={`Taken on ${item.date}`}
+                  className="gallery-photo"
+                  onClick={() => setSelectedPhoto(item.photo)} // Click to enlarge
+                />
+              ))}
+            </div>
           ) : (
             <p className="no-photos">No photos available.</p>
           )}
         </div>
       </div>
+
+      {/* Modal for Enlarged Photo when hovering */}
+      {selectedPhoto && (
+        <div className="modal" onClick={() => setSelectedPhoto(null)}>
+          <div className="modal-content">
+            <img src={selectedPhoto} alt="Enlarged view" className="modal-image" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
