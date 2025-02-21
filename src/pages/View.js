@@ -129,7 +129,7 @@ const View = () => {
                   src={item.photo}
                   alt={`Taken on ${item.date}`}
                   className="gallery-photo"
-                  onClick={() => setSelectedPhoto(item.photo)} // click to enlarge
+                  onClick={() => setSelectedPhoto(item)} // click to enlarge
                 />
                 <p className="photo-date">{item.date}</p> {/* show the date under  image */}
               </div>
@@ -145,8 +145,8 @@ const View = () => {
       {selectedPhoto && (
         <div className="modal" onClick={() => setSelectedPhoto(null)}>
           <div className="modal-content">
-            <img src={selectedPhoto} alt="Enlarged view" className="modal-image" />
-             <p className="modal-date">{selectedPhoto.date}</p> {/* show the date under  image */}
+            <img src={selectedPhoto.photo} alt="Enlarged view" className="modal-image" />
+             <p className="modal-date">{selectedPhoto.date}</p> {/* show the date under image */}
           </div>
         </div>
       )}
