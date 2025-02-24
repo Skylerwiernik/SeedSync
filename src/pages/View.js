@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { app } from "../firebase";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {checkIsAdmin} from "../isAdmin";
 
 import "../App.css";
 
@@ -19,8 +20,11 @@ const View = () => {
   const { id} = useParams();
 
   useEffect(() => {
-    getData();
-  }, []);
+    onAuthStateChanged(auth, () => {
+      getData();
+    });
+
+  }, [auth]);
 
   const triggerUpload = (event) => {
     uploadPhoto(event.target.files[0]);
@@ -71,13 +75,20 @@ const View = () => {
   }
 
   async function getData() {
+
+    if (auth.currentUser.uid !== id) {
+      checkIsAdmin().then((res) => {
+        if (!res) {
+          window.location.href = "/";
+        }
+      })
+    }
+
     try {
       const ref = doc(db, "users", id);
       const snap = await getDoc(ref);
       if (snap.exists()) {
         let data = snap.data();
-
-        // TODO: sort photos in descending order (most recent shown first)
 
         // sort array of photos so most recent appears first
         const sortedPhotos = data["photos"]

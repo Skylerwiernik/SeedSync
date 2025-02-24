@@ -1,7 +1,20 @@
-import { useState } from "react";
+import {useState, useEffect, use} from "react";
 import { useNavigate } from "react-router-dom";
-import {query, collection, orderBy, limit, startAt, endAt, getFirestore, getDocs} from "firebase/firestore";
+import {
+  query,
+  collection,
+  orderBy,
+  limit,
+  startAt,
+  endAt,
+  getFirestore,
+  getDocs,
+  doc,
+  getDoc
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth"; // Import authentication
+import {checkIsAdmin} from "../isAdmin";
+
 import "../App.css";
 import {app} from "../firebase";
 
@@ -12,6 +25,16 @@ const Admin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    checkIsAdmin().then((res) => {
+      if (!res) {
+        window.location = '/';
+      }
+    })
+
+   }, []);
 
     // calls provided search function whenever input changes
     const handleSearch = async (e) => {

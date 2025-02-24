@@ -2,9 +2,10 @@ import "../App.css";
 import { app } from "../firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { useState, useEffect} from "react";
+import { useState } from "react";
 
 import {Popup } from "../components/Popup";
+import {checkIsAdmin} from "../isAdmin";
 
 const Home = () => {
     const [address, setUserAddress] = useState("");
@@ -24,7 +25,7 @@ const Home = () => {
             "address_lower": address.toLowerCase(),
             "id": uid,
             "photos": []
-        }).then(() => redirectUser(uid));
+        }).then(() => redirectUser());
     };
 
     // imported from firebase
@@ -55,21 +56,12 @@ const Home = () => {
     }
 
     async function redirectUser(uid) {
-        // Check Firestore collection "admins" for the user
-        const adminDocRef = doc(db, "admins", "admins");
-        const adminDocSnap = await getDoc(adminDocRef);
-
-        if (adminDocSnap.exists()) {
-            const adminData = adminDocSnap.data();
-            if (adminData.admins && adminData.admins.includes(uid)) {
-                // User is an admin, redirect to /admin
-                window.location.href = "/admin";
-                return;
-            }
+        if (await checkIsAdmin(uid)) {
+            window.location.href = "/admin";
         }
-
-        // User is not an admin, redirect to /view/{id}
-        window.location.href = `/view/${uid}`;
+        else {
+            window.location.href = `/view/${uid}`;
+        }
     }
 
     async function checkUserExists(uid) {
