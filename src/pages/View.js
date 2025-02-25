@@ -57,13 +57,12 @@ const View = () => {
 
       const photoObj = { photo: url, date: date }; // create new photo obj
 
-      // Sort photos immediately after adding new one
+      // Sort by date in descending order
       const updatedPhotos = [...photos, photoObj].sort(
-        (a, b) => new Date(b.date) - new Date(a.date) // Sort in descending order
-      ); // see whether difference in dates is positive or negative, neg = a comes before b
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
 
-      // setPhotos([...photos, photoObj]);
-      setPhotos(updatedPhotos); // ✅ Update state with sorted array
+      setPhotos(updatedPhotos);
       await updateDoc(userDocRef, {
         photos: arrayUnion(photoObj)
       });

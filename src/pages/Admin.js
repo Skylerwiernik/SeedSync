@@ -1,4 +1,4 @@
-import {useState, useEffect, use} from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   query,
@@ -9,17 +9,13 @@ import {
   endAt,
   getFirestore,
   getDocs,
-  doc,
-  getDoc
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth"; // Import authentication
 import {checkIsAdmin} from "../isAdmin";
 
 import "../App.css";
 import {app} from "../firebase";
 
 const db = getFirestore(app);
-const auth = getAuth(app);
 
 const Admin = () => {
   const [searchTerm, setSearchTerm] = useState("");

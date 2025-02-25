@@ -5,7 +5,7 @@ import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 
 import {Popup } from "../components/Popup";
-import {checkIsAdmin} from "../isAdmin";
+import { checkIsAdmin } from "../isAdmin";
 
 const Home = () => {
     const [address, setUserAddress] = useState("");
