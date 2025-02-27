@@ -25,8 +25,3 @@ SeedSync was developed by:
 ### Kyra Brown
 📞 (603) 370-8458  
 🔗 [LinkedIn](https://www.linkedin.com/in/kyra-brown-a53201290/)
-
----
-
-For questions or support, feel free to reach out to us!
-
