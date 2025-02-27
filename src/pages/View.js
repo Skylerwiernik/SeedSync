@@ -100,7 +100,7 @@ const View = () => {
 
         // setPhotos(data["photos"]);
         setPhotos(sortedPhotos);
-        setName(auth.currentUser.displayName);
+        setName(data["name"]);
         setAddress(data["address"]);
       }
     }
